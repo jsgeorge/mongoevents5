@@ -29,6 +29,7 @@ class EventDetail extends Component {
             {event.address} <br /> {event.city},{event.state}
           </p>
           <p>{event.description}</p>
+          <p>Category: {event.category}</p>
           {event.username === this.props.user.username ? (
             <div>
               <Link
@@ -51,7 +52,6 @@ class EventDetail extends Component {
   }
 }
 function mapStateToProps(state, ownProps) {
-  console.log(state);
   return {
     auth: state.auth,
     user: state.auth.user,

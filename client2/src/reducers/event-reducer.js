@@ -7,7 +7,6 @@ export default (state = {}, action) => {
       return { ...state, list: action.payload };
     case GET_EVENT:
       return { ...state, event: action.payload };
-
     default:
       return state;
   }

@@ -12,34 +12,44 @@ class SigninForm extends React.Component {
       identifier: "",
       password: "",
       errors: {},
-      isLoading: false
+      isLoading: false,
+      invalid: false
     };
 
     this.onSubmit = this.onSubmit.bind(this);
     this.onChange = this.onChange.bind(this);
   }
 
-  // isValid() {
-  //   const { errors, isValid } = validateInput(this.state);
+  isValidEntries() {
+    let errors = {};
+    const { identifier, password } = this.state;
+    if (!identifier) {
+      errors.identifier = "Missing/invalid email";
+    }
+    if (!password) {
+      errors.password = "Missing/invalid passworrd";
+    }
 
-  //   if (!isValid) {
-  //     this.setState({ errors });
-  //   }
-
-  //   return isValid;
-  // }
+    // if (errors) {
+    this.setState({ errors });
+    //   return false;
+    // }
+    // return true;
+    const isValid = Object.keys(errors).length === 0;
+    return isValid;
+  }
 
   onSubmit(e) {
     e.preventDefault();
 
-    // if (this.isValid()) {
-    //this.setState({ errors: {}, isLoading: true });
-    this.props.login(this.state).then(
-      res => this.props.history.push("/events"),
-      err => console.log("Inalid username and/or password", err)
-      //this.setState({ errors: err.response.data.errors, isLoading: false })
-    );
-    // }
+    if (this.isValidEntries()) {
+      this.setState({ errors: {}, isLoading: true });
+      this.props.login(this.state).then(
+        res => this.props.history.push("/events"),
+        err =>
+          this.setState({ errors: err.response.data.errors, isLoading: false })
+      );
+    }
   }
 
   onChange(e) {
@@ -53,7 +63,7 @@ class SigninForm extends React.Component {
       <form onSubmit={this.onSubmit}>
         <h1>Login</h1>
 
-        {/* {errors.form && <div className="alert alert-danger">{errors.form}</div>} */}
+        {errors.form && <div className="alert alert-danger">{errors.form}</div>}
 
         <TextFieldGroup
           field="identifier"

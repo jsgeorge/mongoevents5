@@ -9,16 +9,27 @@ const eventSchema = mongoose.Schema({
   name: {
     type: String,
     require: true,
-    trim: true,
-    unique: 1
+    trim: true
   },
-  Address: {
+  location: {
     type: String,
     require: true
   },
-  Category: {
+  address: {
     type: String,
-    reuire: true
+    require: true
+  },
+  city: {
+    type: String,
+    require: true
+  },
+  state: {
+    type: String,
+    require: true
+  },
+  category: {
+    type: String,
+    require: true
   },
   username: {
     type: String,
@@ -36,11 +47,11 @@ const eventSchema = mongoose.Schema({
   },
   eventTime: {
     type: String,
-    reqire: true
+    require: true
   },
   description: {
     type: String,
-    require: true
+    require: false
   }
 });
 

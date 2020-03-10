@@ -1,10 +1,8 @@
-const express = require("express");
-const bcrypt = require("bcrypt");
 const jwt = require("jwt-simple");
 const config = require("../config");
 const User = require("../models/users");
 
-let router = express.Router();
+const router = require("express").Router();
 
 function tokenForUser(user) {
   const timestamp = new Date().getTime();
@@ -22,15 +20,15 @@ router.post("/", (req, res) => {
   const { identifier, password } = req.body;
   User.findOne({ email: identifier }, (err, user) => {
     if (!user)
-      return res.json({
+      return res.status(401).json({
         loginSuccess: false,
-        message: "Auth failed, email not found"
+        errors: { form: "Login failed, email not found" }
       });
     user.comparePassword(password, (err, isMatch) => {
       if (!isMatch)
-        return res.json({
+        return res.status(401).json({
           loginSuccess: false,
-          message: "Wrong password"
+          errors: { form: "Login failed, Wrong password" }
         });
 
       res.status(200).json({
@@ -40,4 +38,4 @@ router.post("/", (req, res) => {
   });
 });
 
-module.exports = { router };
+module.exports = router;

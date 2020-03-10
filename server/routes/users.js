@@ -1,10 +1,9 @@
-const express = require("express");
 const bcrypt = require("bcrypt");
 const jwt = require("jwt-simple");
 const config = require("../config");
 const User = require("../models/users");
 
-let router = express.Router();
+const router = require("express").Router();
 
 function tokenForUser(user) {
   const timestamp = new Date().getTime();
@@ -47,4 +46,4 @@ router.get("/", (req, res) => {
   });
 });
 
-module.exports = { router };
+module.exports = router;

@@ -26,6 +26,9 @@ const userSchema = mongoose.Schema({
   timezone: {
     type: String,
     trim: true
+  },
+  defaultCity: {
+    type: String
   }
 });
 
@@ -48,4 +51,4 @@ userSchema.statics.findByToken = function(token, cb) {
 
 const User = mongoose.model("User", userSchema);
 
-module.exports = { User };
+module.exports = User;

@@ -1,8 +1,12 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import TextFieldGroup from "../common/TextFieldGroup";
+//import SelectFieldGroup from "../common/SelectFieldGroup";
+import classnames from "classnames";
+
 import { connect } from "react-redux";
 import { addEvent } from "../../actions/eventActions";
+import { getCategories } from "../../actions/categoryActons";
 
 class AddEventForm extends Component {
   constructor(props) {
@@ -27,6 +31,7 @@ class AddEventForm extends Component {
   }
   componentDidMount() {
     this.setState({ username: this.props.user.username });
+    this.props.getCategories();
   }
   onChange(e) {
     if (!!this.state.errors[e.target.name]) {
@@ -37,14 +42,24 @@ class AddEventForm extends Component {
       this.setState({ [e.target.name]: e.target.value });
     }
   }
+
   valid(value) {
     console.log(/[^0-9a-zA-Z]/.test(value));
     return /[^0-9a-zA-Z]/.test(value);
   }
   isValidEntries() {
     let errors = {};
-    const { name, category, location, eventDate, eventTime } = this.state;
-    if (!name || !this.valid(name)) {
+    const {
+      name,
+      category,
+      location,
+      eventDate,
+      eventTime,
+      address,
+      city,
+      state
+    } = this.state;
+    if (!name) {
       errors.name = "Missing/invalid name";
     }
     if (!category) {
@@ -58,6 +73,15 @@ class AddEventForm extends Component {
     }
     if (!eventTime) {
       errors.eventTime = "missing/invalid event time";
+    }
+    if (!address) {
+      errors.address = "missing/invalid address";
+    }
+    if (!city) {
+      errors.city = "missing/invalid event date";
+    }
+    if (!state) {
+      errors.state = "missing/invalid event time";
     }
     // if (errors) {
     this.setState({ errors });
@@ -77,31 +101,109 @@ class AddEventForm extends Component {
       );
     }
   }
+  showCategoryButtons = name => (
+    <span>
+      <label className="custom-control-label" for="defaultUnchecked">
+        {name}
+      </label>
+      <input
+        type="radio"
+        className="custom-control-input"
+        id="defaultUnchecked"
+        name="defaultExampleRadios"
+      />
+    </span>
+  );
   render() {
     const { errors } = this.state;
+    const { categories } = this.props;
     return (
       <div>
-        {errors.form && (
-          <div className="alert alert-danger">{this.state.errors.form}</div>
-        )}
         <form onSubmit={this.onSubmit}>
+          {errors.form && (
+            <div className="alert alert-danger">{errors.form}</div>
+          )}
+          {categories.list ? (
+            <div
+              className={classnames("form-group", { "has-error": errors.name })}
+            >
+              <label className="control-label">Category</label>
+              <select
+                className="form-control"
+                onChange={this.onChange}
+                //checkUserExists={this.checkUserExists}
+                value={this.state.category}
+                name="category"
+              >
+                <option value="">Select event category</option>
+                {this.props.categories.list.map(c => (
+                  <option key={c._id} value={c.name}>
+                    {c.name}
+                  </option>
+                ))}
+              </select>
+              {errors.category && (
+                <span className="help-block">{errors.category}</span>
+              )}
+            </div>
+          ) : (
+            <p>No current categories</p>
+          )}
+
+          {/* {categories.list ? (
+            <div>
+              <label>Category</label>
+              <div
+                style={{
+                  background: "#eee",
+                  padding: "5px",
+                  marginBottom: "10px",
+                  maxWidth: "200px"
+                }}
+              >
+                {this.props.categories.list.map(c => (
+                  <div
+                    key={c._id}
+                    className="form-check"
+                    style={{
+                      paddingLeft: "0px",
+                      marginBottom: "10px"
+                    }}
+                  >
+                    <label
+                      className="form-check-label "
+                      style={{
+                        marginLeft: "0px",
+                        width: "150px",
+                        marginRight: "25px"
+                      }}
+                    >
+                      {c.name}
+                    </label>
+
+                    <input
+                      type="radio"
+                      className="form-check-input pull-right"
+                      name="category"
+                      value={c.name}
+                      onChange={this.onChange}
+                    />
+                  </div>
+                ))}
+              </div>
+              {errors.name && <span className="help-block">{errors.name}</span>}
+            </div>
+          ) : (
+            <p>No current category</p>
+          )} */}
           <TextFieldGroup
             error={errors.name}
-            label="Name"
+            label="Event Name"
             onChange={this.onChange}
             //checkUserExists={this.checkUserExists}
             value={this.state.name}
             field="name"
           />
-          <TextFieldGroup
-            error={errors.category}
-            label="category"
-            onChange={this.onChange}
-            //checkUserExists={this.checkUserExists}
-            value={this.state.category}
-            field="category"
-          />
-
           <TextFieldGroup
             error={errors.eventDate}
             label="eventDate"
@@ -174,7 +276,10 @@ class AddEventForm extends Component {
 function mapStateToProps(state) {
   console.log(state);
   return {
-    user: state.auth.user
+    user: state.auth.user,
+    categories: state.categories
   };
 }
-export default connect(mapStateToProps, { addEvent })(withRouter(AddEventForm));
+export default connect(mapStateToProps, { addEvent, getCategories })(
+  withRouter(AddEventForm)
+);

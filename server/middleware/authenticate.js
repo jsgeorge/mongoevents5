@@ -9,7 +9,6 @@ const authenticate = (req, res, next) => {
   if (authorizationHeader) {
     token = authorizationHeader.split(" ")[1];
   }
-  console.log("token", token);
   if (token) {
     //     User.findByToken(token, (err, user) => {
     //       if (err) {

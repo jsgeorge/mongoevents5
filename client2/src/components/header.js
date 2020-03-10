@@ -19,10 +19,30 @@ class Header extends Component {
               MongoEvents
             </Link>
           ) : (
-            <Link to="/events" className="navbar-brand">
-              MongoEvents
-            </Link>
+            <span>
+              <Link to="/events" className="navbar-brand">
+                MongoEvents
+              </Link>
+              <Link
+                to="/events/new"
+                style={{
+                  background: "#fff",
+                  borderRadius: "200px",
+                  border: "1px solid #eee",
+                  color: "#777",
+                  height: "40px",
+                  width: "40px",
+                  fontWeight: "bold",
+                  padding: "0 4px",
+                  margin: "0",
+                  marginLeft: "20px"
+                }}
+              >
+                <span style={{ fontSize: "24px" }}>+</span>
+              </Link>
+            </span>
           )}
+
           <button
             className="navbar-toggler"
             type="button"
@@ -51,15 +71,15 @@ class Header extends Component {
                 </span>
               ) : (
                 <span>
-                  <li className="nav-item">
+                  {/* <li className="nav-item">
                     <Link to="/account" className="nav-link ">
                       Account
                     </Link>
-                  </li>
+                  </li> */}
 
                   <li className="nav-item">
                     <a
-                      href="#"
+                      href="/"
                       onClick={this.logout.bind(this)}
                       className="nav-link "
                     >

@@ -20,3 +20,22 @@ a:hover {
   color: #333;
   text-decoration: none;
 }
+.ctgryBtn {
+  margin: 2px;
+  border: "1px solid #111";
+  background: #eee;
+  padding: 2px 4px;
+}
+.ctryFont {
+  font-size: 18px;
+  font-weight: bold;
+}
+.ctryBtns {
+  float: right;
+}
+@media (max-width: 500px) {
+  .ctryBtns {
+    float: none;
+    clear: left;
+  }
+}

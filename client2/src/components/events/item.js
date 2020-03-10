@@ -5,9 +5,7 @@ const EventItem = ({ event }) => {
     <div className="card mb-3">
       <div className="row">
         <div className="col-3">
-          <h6>
-            <strong>{event.eventDate}</strong>
-          </h6>
+          <h6>{event.eventDate}</h6>
         </div>
         <div className="col-9">
           <Link to={`/events/${event._id}`}>

@@ -12,8 +12,8 @@ const store = createStore(
     window.devToolsExtension ? window.devToolsExtension() : f => f
   )
 );
-
 if (localStorage.jwtToken) {
+  console.log("jwtTOken is defined", localStorage.jwtToken);
   setAuthorizationToken(localStorage.jwtToken);
   store.dispatch(setCurrentUser(jwtDecode(localStorage.jwtToken)));
 }
