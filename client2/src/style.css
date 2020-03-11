@@ -3,7 +3,7 @@
   clear: left;
 }
 .page-top-cmds {
-  padding: 15px 0;
+  padding: 10px 0;
 }
 .has-error {
   color: red;
@@ -20,22 +20,23 @@ a:hover {
   color: #333;
   text-decoration: none;
 }
+.ctgryBtns {
+  padding: 12px 0;
+}
 .ctgryBtn {
   margin: 2px;
   border: "1px solid #111";
-  background: #eee;
+  background: rgb(255, 254, 254);
   padding: 2px 4px;
+  font-size: 16px;
 }
 .ctryFont {
-  font-size: 18px;
-  font-weight: bold;
+  font-size: 20px;
 }
-.ctryBtns {
-  float: right;
+.filterCmds {
+  border-top: "1px solid #ccc";
+  border-bottom: "1px solid #ccc";
 }
+
 @media (max-width: 500px) {
-  .ctryBtns {
-    float: none;
-    clear: left;
-  }
 }

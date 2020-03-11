@@ -5,6 +5,11 @@ const settingSchema = mongoose.Schema({
     type: String,
     require: true,
     trim: true
+  },
+  filterState: {
+    type: String,
+    require: true,
+    trim: true
   }
 });
 

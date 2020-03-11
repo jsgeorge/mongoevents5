@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Link, withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { getEvents } from "../../actions/eventActions";
 import { getSettings, chgDefaultCity } from "../../actions/settingsActions";
@@ -14,6 +14,7 @@ class EventsPage extends Component {
       showChgCity: false,
       srchStr: "",
       defaultCity: "",
+      defaultState: "",
       city: "",
       state: "",
       errors: {},
@@ -71,7 +72,10 @@ class EventsPage extends Component {
   onChgDefaultCity = () => {
     if (this.isValidEntries()) {
       this.props.chgDefaultCity(
-        { filterCity: this.state.defaultCity },
+        {
+          filterCity: this.state.defaultCity,
+          filterState: this.state.defaultState
+        },
         this.props.user.id
       );
       this.setState({ showChgCity: false });
@@ -120,19 +124,21 @@ class EventsPage extends Component {
           /> */}
 
           {setting ? (
-            <div>
+            <div className="filterCmds">
               <h6>
-                <span className="ctryFont">{setting.filterCity}</span>
+                <span className="ctryFont">
+                  {setting.filterCity}, {setting.filterState}
+                </span>
 
                 <button
                   style={{
                     height: "30px",
                     width: "30",
-                    fontSize: "10px",
+                    fontSize: "8px",
                     padding: "5px 2px",
                     fontWeight: "bold",
-                    margin: "0 5px",
-                    marginRignt: "40px",
+                    margin: "0 5px 0 0",
+                    marginRignt: "60px",
                     background: "Transparent"
                   }}
                   className="btn btn-default"
@@ -156,7 +162,7 @@ class EventsPage extends Component {
                   </div>
                 ) : null}
                 {categories.list ? (
-                  <div className="ctryBtns">
+                  <span className="ctgryBtns">
                     <button
                       className="btn btn-default btn-sm ctgryBtn"
                       onClick={() => this.onFilterCategory("")}
@@ -172,7 +178,7 @@ class EventsPage extends Component {
                         {c.name}
                       </button>
                     ))}
-                  </div>
+                  </span>
                 ) : null}
 
                 {/* <button
